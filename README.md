@@ -1,1 +1,4 @@
-# ODN-rock_paper_scissor
+# Rock Paper Scissors game
+***
+A randomized game between Player and AI
+
