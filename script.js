@@ -1,48 +1,46 @@
+let playerScore = 0;
+let computerScore = 0;
+
+const choice = document.querySelectorAll("button");
+const result = document.querySelector(".result");
+const score = document.querySelector(".score");
+const winner = document.querySelector(".winner");
+
 function getComputerChoice() {
   const result = ["rock", "paper", "scissor"];
   return result[Math.floor(Math.random() * result.length)];
 }
-// console.log(getComputerChoice());
-// ---------------------------
 
-computerSelection = getComputerChoice().toLowerCase();
+computerSelection = getComputerChoice();
 
 function playRound(playerSelection, computerSelection) {
-  playerSelection = playerSelection.toLowerCase();
-
-  if (playerSelection === computerSelection) return "Tie Breaker";
-  if (
+  computerSelection = getComputerChoice();
+  if (playerSelection === computerSelection) result.textContent = "Tie Breaker";
+  else if (
     (playerSelection === "scissor" && computerSelection === "rock") ||
     (playerSelection === "paper" && computerSelection === "scissor") ||
     (playerSelection === "rock" && computerSelection === "paper")
   ) {
-    return `You lose! ${playerSelection} beats ${computerSelection}`;
-  }
-  return `You Win! ${playerSelection} beats ${computerSelection}`;
-}
-
-// ----------------------------
-
-const userInput = () => {
-  playerSelection = prompt("Enter Rock, Paper or Scissor");
-  if (
-    playerSelection.toLowerCase() === "rock" ||
-    playerSelection.toLowerCase() === "paper" ||
-    playerSelection.toLowerCase() === "scissor"
-  ) {
-    console.log(playRound(playerSelection, computerSelection));
+    result.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+    computerScore++;
+    gameUpdate();
+    gameEnd();
   } else {
-    alert("Invalid choice");
-    userInput();
-  }
-};
-
-// ----------------------------
-
-function game() {
-  for (let i = 0; i < 5; ++i) {
-    userInput();
+    result.textContent = `You Win! ${playerSelection} beats ${computerSelection} `;
+    playerScore++;
+    gameUpdate();
+    gameEnd();
   }
 }
 
-game();
+function gameUpdate() {
+  score.textContent = `You : ${playerScore} - ${computerScore}`;
+}
+
+function gameEnd() {
+  if (playerScore === 5) {
+    winner.textContent = "You Win, Champion";
+  } else if (computerScore === 5) {
+    winner.textContent = "You Lost, Kudos";
+  }
+}
